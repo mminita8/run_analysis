@@ -1,0 +1,56 @@
+---
+title: "Code book"
+author: "Monica Zurita"
+date: "10/22/2020"
+output:
+  html_document:
+    df_print: paged
+  pdf_document: default
+---
+
+```{r load-packages, include=FALSE}
+library(dplyr)
+library(base)
+```
+
+```{r}
+source("run_analysis.R", local = knitr::knit_global())
+```
+
+
+## Getting and Cleaning Data
+### Course Project
+
+
+This assignment correspond to the project developed in Getting and Cleaning Data.
+
+This project employs Human Activity Recognition Using Smartphones
+ Data Set from the UCI Machine Learning Repository
+ 
+The data is divided in two sets: training an test, so, the first step is merging both sets.  However, before merging, the data must be reading using the read.table command.
+
+For checking the dimensions the command dim could be employed:
+
+```{r X_test, X_train}
+dim(X_test)
+dim(X_train)
+```
+Since both have same dimension with rbind command both data sets are merged.  Same treatment is performed to y and subject data sets.
+
+Features file has 561 files and 2 columns and provides the names of the x data set's columns by the colnames command.  Before merging x with y and subject data sets, the last two data sets are also named by same column.
+
+Using grep command, mean and std columns of x data set could be obtained.  The data to be employed must include:
+
+```{r features, mean_std_col}
+features[mean_std_col,]
+```
+After extracting the columns of mean and SD of x data set, the merge with y and subject columns is performed by cbind command.
+
+Employing factor and levels commands, the numbers in activity column are changed to the labels ("WALKING, SITTING, etc.)
+
+Finally, a new data set is created by summarizing the mean of the variables grouped by subject and activity label.
+
+```{r tidy_data}
+head(tidy_data)
+```
+
